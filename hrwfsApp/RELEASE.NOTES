@@ -1,0 +1,241 @@
+V0-4 4 Nov 1999 CB: 
+-------------------
+Modifications toward V0-3
+  - version for PPC
+  - simplified version for hrwfs only
+  - binning windowing implemented
+  - WCS + Ra and Dec implemeneted
+  - Fits header improved
+  - new observe command
+
+V0-5 8 Nov 1999 CB:
+-------------------
+Modifications toward V0-4
+  - WCS bug fix
+  - TELESCOP and OBSERVAT are now updated from the tcs:name
+
+V0-6 17 Nov 1999 CB:
+--------------------
+Modifications toward V0-5
+  - Bug fixed into capfast hrwfsSequenceCad.sch
+  - in local.vws add 
+    hostAdd ("manta","10.1.5.10")
+    nfsMount "manta", "/export/astro", "/usr/astro"
+    to be able to save a file into /usr/astro/data/...
+  - offsets for detectors are 2400,2398
+    detOffset modified only 2 offsets for HR
+  - add new command setDhsInfo
+  - FOUND A BUG A MEMORY LEAK WITH DHS (1456 bytes)
+  - bug fixed into wfsInitTelName in wfsLib.c
+
+V0-7 5 Jan 2000 CB:
+-------------------
+  - in startup.vws slalib and timelib are now in /gemini directly
+  - in startup_MINIMAL.vws -> Minimal startup hrwfs
+  - tidy up the src directory:
+    Makefile2.Vx, config_hkbaja47.h, config_mv167_16MB.h, config_mv167_32MB.h,
+    detControl.c.uint, dhstests.c, drvVmi5588.c, epToVxLib2.c, epToVxLibHrwfs.c,
+    global_edit, makeLinks, simpleLog2.c, vmi5588.h, wfsDb.c, wfsDb.h, wfsDb2.c,
+    wfsDb2.h, wfsIndent, wfsPostscript, wfsPrint, simpleLog.c, hkbaja.h, mpPipeDrv.c, 
+    mpPipeDrv.h, mv167.h, sysLib_hkbaja47.c, sysLib_mv167_16MB.c, sysLib_mv167_32MB.c,
+    sysextLib.c, sysextLib.h.
+    + epToVxLib.c, .h modified
+  - continue tidy up the src directory: tesHarness.c, .h and testKit.c removed
+    Makefile.Vx and startup.vws modified in consequence
+
+V0-8 2 Feb 2000 CB:
+-------------------
+  - remove osp.h, ospLib.c, ospInvertFuncs.c and replace in detControl.c 
+    ospReadHeaderInt() and ospreadUShortImage() by detReadFitsHeaderInt() and 
+    detReadFitsImageUint16()
+  - remove writeZernikes.c + remove osp.h from wfsHrwfsDb.c
+  - remove strcasecomp.c unused
+  - dl: remove cad2.adl cad20.adl cad4.adl cad8.adl cad_details2.adl 
+               cad_details4.adl cad_details8.adl console.csh det_chop.adl 
+               det_main.adl.25oct helpfile.txt pixel_router.adl
+               rlogin.csh showDiag.adl showFg.adl sig_init.adl sig_main.adl 
+               sig_mode.adl simulateTcs.adl test.csh testHarness.adl wfsStart
+               wfs_calibrate.adl wfs_errorLog.adl wfs_gbdObserve.adl 
+               wfs_main_srp.adl wfs_reboot.adl wfs_rebootConf.adl 
+               wfs_startMeasure.adl wfs_test.adl 
+  - src: remove synchroMap.h
+  - src/capfast/dl add reboot, test commands
+  - dl remove det_test.adl
+  - create the sequencer IF between HRWFS and OCS
+  - src/capfast/dl add commands for OCS: init, datum, park, verify, endVerify, guide, endGuide
+  - add new files: hrwfsCarNext.sch and sym + hrwfsCarNext1.sch and sym
+  - src/capfast/dl add commands for OCS: endObserve
+  - src/capfast/dl modify to handle observe command for OCS and new detObserve command
+  - capfast new files: datumFanCad.sch and sym + initFanCad.sch and sym
+  - src : replace wfsControl per seqControl module.
+  - add sad records
+
+V0-9 13 March 2000 - CB
+-----------------------
+  - add 4 new sad records: exposed, exposedRQ, utstart, utend
+  - add new sad record: elapsed
+  - detControl.c : remove detFrameReduce() and detWriteFits()
+  - cicsCarHealth.c add cicsStateCombine() + add correct handling of state from seq
+  - remove errorLog.c
+  - change current history, errorLog records to dc:histor... (db + dm + simpleLogHrwfs.c)
+  - add systemHistorySad.sch and sym
+
+V1-0 9 May 2000 - CB
+--------------------
+  - detControl.c add a flag to check if it is safe to read the temperature,
+    add a missing epToVxPipeWrite (xStart)
+  - systemTcs.sch -> replace ao health record by sir health record
+
+V1-1 24 July 2000 - CB
+----------------------
+  - add the command detDhsReconnect
+  - detInit and detReset, add -20 and offset by default
+  - Now two methods for reading the CCD:
+    if exp < readout time : n * RDC(1) -> always this method
+    if exp > readout time : RDC(n)
+  - bug fixed for fits keywords and dhs keywords: exposure time and 
+    darktime were wrong when doing 3 exposures for ex.
+  - new ADC offsets: 2340, 2350
+
+V1-2 15 Feb 2001 - CB
+---------------------
+  - hrwfsInstall : replace the link to cfitsio
+    (/home/cboyer/wfs_lib/cfitsio-ppc) per /gemini/cfitsio/cfitsio
+    and also add the site
+  - add a StripTool for temperature
+  - det_frameSize.dl -> replace the button x,y X 2 per YES
+  - par: add a new init file for CP and MK in order to have default
+    temp, ADC offsets and SN of the CCD
+    Temp, offset not updated according to the site in detInit and detReset.
+    I have to move all the DATREC_CONTEXT structures to obsId, I have created
+    detGetSirContext() and detWriteDefSirContext() and fix the bug.
+  - remove errors when stop an observation not in progress
+  - add a button "CLEAR ERRORS" on main detector screen
+  - ADC offset for binning and no binning (par and src)
+
+
+V1-3 20 Feb 2001 - CB
+---------------------
+  - add command detDhsDisplay
+  - when reboot, exit properly the dhs. Add detDhsConnected flag.
+  - sir record dhsCon in sad to indicates status of the connection, 
+    remove detDhsSem leftover when we have one detControl for 3 WFS
+  - startup_MINIMAL.vws: remove all routeAdd
+  - Now startupMK.vws and startupCP.vws
+
+V1-4 04 Apr 2001 - CB
+---------------------
+  - add adc0, adc1 sir records
+  - add startup_nodhs.vws
+  - modify windowing to do a window around a point
+
+dev
+  - Install timboot.asm.V3.3
+  - add ovsercan region (max allowed 8, min 1, 0 means no overscan):
+        . modify detGeometry and detFrameSize to allow overscan region
+        . modify detFrameUnsrambleUint16() as well as detFrameReduceUint16()
+  - add keywords: FILTER1, FILTER2, ACLENS, FLDSTOP, CALSRC, ACFOCUS, DETTEMP
+  - add keywords: INPORT, DATE-OBS, TIME-OBS, CCDSIZE, CCDSEC, CCDSEC1, CCDSEC2,
+                  DATASEC1, DATASEC2, BIASSEC1, BIASSEC2
+  - add keyword FRAME, tidy up ccdsec keywords
+  - Fix a bug in detWriteFitsUint16
+
+V1-5 24 Jun 2001 - CB/CJM
+------------------------
+  - further changes to overscan/windowing code plus updates to
+    fits headers
+  - add apply/cad layer to provide ocs interface to hrwfs DC commands
+    and A&G HRWFS mechanism commands
+
+V1-6 05 Oct 2001 - CB
+---------------------
+  - Minor changes for the seqexec (do not init the lifetime and contrib).
+    Also some keywords are no more in low case
+
+V2-0 20 Dec 2001 - CB
+---------------------
+  - Port to epics3.13.4
+    . hrwfsInstall modified
+    . Directory adl created, contains now all the .adl files
+    . src: wfsHrwfsDb.c, epToVxLib.c, sdsuLib.c, hrwfsConfig.c modified
+    . capfast: replace all the wait records, replace all the subcad records
+    . startup: startup files modified
+    . dspsrc: Makefile rewrited
+    . db 
+  - detObstype now accepts not only the 5 predefined observe types but 
+    everything
+  - Reject detObserveStart and observeStart if dhs output option is selected 
+    and dhs is not connected 
+  - detDhsInit is now started by detControl.c
+  - Minor changes for seqexec (do not init OBSTYPE, telescope and OBSERVAT)
+  - Replace some ifdef DEBUG by MESSAGE_LOG into detControl.c
+
+V2-1 10 Jan 2002 - CB
+---------------------
+  - add detPowerOn
+  - hrwfs_dm.sh uses now dm2-4 command
+  - Minor changes for seqexec (do not init EQUINOX, EPOCH and FRAME)
+  - detWriteFitsUint16: strings are now left justified following Claudia's 
+    request
+
+V3-0 27 March 2002 - CB
+-----------------------
+  - startup: dhs has now been compiled with tornado2.0
+  - major modifications to have the timing and utility code downloaded from
+    EEPROMs (vme, timing and utility EEPROM upgraded)
+  - remove from the user interface the detReset command
+
+V3-1 15 April 2002 - CB
+-----------------------
+  - Observe and detObserve commands, check the datalabel for space character
+  - systemAg.sch: updateAg gensub record: I have modified the SCAN to be 0.1 s
+    instead of 5s
+
+V3-2 24 October 2003 - CB
+-------------------------
+  - remove errors when starting an observation already in progress
+  - colors.adl: replace ERR with ERROR for the color rules
+  - add detPowerOff command
+  - GEM8.4
+  - small bug fix in setObserve command
+  - update defDetContHRCP.dat
+  - startupCP.vws: change IP address of reggie
+
+V3-3 11 November 2003 - PG
+----------------------------
+  - Fixed FITS keyword problem in detControl.c
+  - Fixed reggie's ip number in startupCP.vws
+  - Removed .applTop in all subdirectories from the repository
+  - Changed DHS path name in hrwfsInstall
+
+V3-4 07 Jan 20034 - CB
+-----------------------
+  - detFrameSize: default parameters of the command into a pv load file 
+    (one per site)
+
+V3-5 07 Jan 2005 - AAG
+-----------------------
+  - DHS Server moved from reggie to jughead
+    IMP_StartupCP.hrwfs
+    startup/startupCP.vws
+  - IMPStartup files separated from MK & CP
+    IMP_StartupMK.hrwfs
+    IMP_StartupCP.hrwfs
+    hrwfsInstall
+
+V3-6 04 Mar 2005 - AAG
+-----------------------
+  - GN DHS Server moved from archie to acamar
+    IMP_StartupMK.hrwfs
+    startup/startupMK.vws
+    
+V3-7 28 Jul 2006 - AAG
+-----------------------
+  - ramdisk mounted from jughead (host added) in startupCP.vws 
+  - wfsHrwfsDb.c: Changed default target temp to -30 for CP site
+  - hrwfsDet.pv: updated version number
+  - hrwfsSeq.pv: updated version number
+  - detControl.c: Fixed definition of temp control parameters at detInit phase
+    according to defDetContHRCP.dat file
+
+  - par/defDetContHRMK.dat

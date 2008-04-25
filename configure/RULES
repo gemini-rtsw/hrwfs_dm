@@ -1,0 +1,48 @@
+# RULES
+
+include $(EPICS_BASE)/configure/RULES
+
+# Library should be rebuilt because LIBOBJS may have changed.
+$(LIBNAME): ../Makefile
+
+buildInstall : \
+	$(INSTALL_SCRIPTS) $(INSTALL_PROD) $(INSTALL_MUNCHS) \
+	$(INSTALL_TCLLIBS) $(INSTALL_TCLINDEX) \
+	$(INSTALL_OBJS) \
+	$(INSTALL_DOCS) \
+	$(INSTALL_DATAS) \
+	$(INSTALL_HTMLS) \
+	$(INSTALL_TEMPLATE) \
+	$(INSTALL_CONFIGS)
+
+$(INSTALL_DATA)/%: %
+	@echo "Installing $@"
+	@test -d $(INSTALL_DATA) || mkdir $(INSTALL_DATA)
+	@if [ $(suffix $*)XX = 'XX' ]; \
+	then $(INSTALL) -m 644 $< $(INSTALL_DATA); \
+	fi
+	@if [ $(suffix $*) = '.tk' ] || [ $(suffix $*) = '.sh' ]; \
+	then $(INSTALL) -m 755 $< $(INSTALL_DATA); \
+	else $(INSTALL) -m 644 $< $(INSTALL_DATA); \
+	fi
+
+$(INSTALL_DATA)/%: ../%
+	@echo "Installing $@"
+	@test -d $(INSTALL_DATA) || mkdir $(INSTALL_DATA)
+	@if [ $(suffix $*)XX = 'XX' ]; \
+	then $(INSTALL) -m 644 $< $(INSTALL_DATA); \
+	fi
+	@if [ $(suffix $*) = '.tk' ] || [ $(suffix $*) = '.sh' ]; \
+	then $(INSTALL) -m 755 $< $(INSTALL_DATA); \
+	else $(INSTALL) -m 644 $< $(INSTALL_DATA); \
+	fi
+
+# Adl2dl rule
+
+%.dl : ../%.adl
+	$(RM) $@
+ifdef CMAPFILE
+	$(ADL2DL) $< cmapfile=$(CMAPFILE)
+else
+	$(ADL2DL) $<
+endif

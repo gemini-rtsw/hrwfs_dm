@@ -1,0 +1,70 @@
+PACKAGENAME=hrwfs
+VERSION=3.7
+RELEASE=0
+ARCH=i386
+
+RPM_TMPDIR= rpmtmp
+TOP_BUILDDIR= $(PWD)
+BUILDBINARY=-bb
+BUILDSOURCE=-bs
+BUILDALL=-ba
+RPM_BUILDOPTS=$(BUILDBINARY)
+GEMINI_CONF=/etc/gemini/gemini-root.conf
+RPMBUILD_LOG=$(TOP_BUILDDIR)/rpmbuild.log
+RPMFILES=$(TOP_BUILDDIR)/$(RPM_TMPDIR)/RPMS/$(ARCH)/*
+SRPMFILES=$(TOP_BUILDDIR)/$(RPM_TMPDIR)/SRPMS/*
+
+SPECFILE=$(PACKAGENAME).spec
+
+include $(GEMINI_CONF) 
+
+all:	ext rpm
+
+ext:
+#	you can put some code building instruction here, like e.g.
+#	make
+#	but you can also specify it in the build section of the spec-file
+
+rpm:
+	@echo "Preparing to build rpm files"
+	@echo ""
+	@echo "creating temporary directory structure ... "
+	mkdir -p $(TOP_BUILDDIR)/$(RPM_TMPDIR)/{RPMS,S{OURCE,PEC,RPM}S}
+	@echo ""
+	@echo "writing temporary $(HOME)/.rpmmacros ... "
+	@echo "%_topdir $(TOP_BUILDDIR)/$(RPM_TMPDIR)" > $(HOME)/.rpmmacros
+	@echo "%_prefix $(GEMINI_TOP)" >> $(HOME)/.rpmmacros
+	@echo "%gemopt opt" >> $(HOME)/.rpmmacros
+	@echo "%packagename $(PACKAGENAME)" >> $(HOME)/.rpmmacros
+	@echo "%version $(VERSION)" >> $(HOME)/.rpmmacros
+	@echo "%release $(RELEASE).el5.gemini" >> $(HOME)/.rpmmacros
+	@echo "%arch $(ARCH)" >> $(HOME)/.rpmmacros
+	@echo ""
+	@echo "wrote $(HOME)/.rpmmacros:"
+	@cat $(HOME)/.rpmmacros
+	@echo ""
+	@(cd $(TOP_BUILDDIR)/$(RPM_TMPDIR); ln -snf $(TOP_BUILDDIR) BUILD; cd $(TOP_BUILDDIR))
+	@echo "building RPMs ... "
+	@rpmbuild --quiet $(RPM_BUILDOPTS) $(SPECFILE) > $(RPMBUILD_LOG)
+	@echo "moving RPMs to $(TOP_BUILDDIR)"
+	@if [ `ls -l $(COPYFILES) 2> /dev/null | wc -l` -gt 0 ]; then mv $(RPMFILES) $(TOP_BUILDDIR);fi
+	@if [ `ls -l $(SRPMFILES) 2> /dev/null | wc -l` -gt 0 ]; then mv $(SRPMFILES) $(TOP_BUILDDIR);fi
+	@echo ""
+	@echo "cleaning up ... "
+	unlink $(TOP_BUILDDIR)/$(RPM_TMPDIR)/BUILD
+	rm -rf $(TOP_BUILDDIR)/$(RPM_TMPDIR)
+	rm -rf $(HOME)/.rpmmacros
+	@echo ""
+	@echo "build successfully finished"
+
+deep-clean:	rpm-clean ext-clean
+	rm -f *.rpm
+
+clean:	rpm-clean ext-clean
+	
+rpm-clean: 
+	rm -rf $(PACKAGENAME)-*$(VERSION)-$(RELEASE).*.rpm $(RPM_TMPDIR)
+
+ext-clean:
+# put your cleaning instructions here, like e.g.
+#	make clean
