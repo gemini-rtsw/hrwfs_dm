@@ -1,11 +1,22 @@
-Summary: %{packagename} Package
-Name: %{packagename}
+%define _prefix __auto__
+%define gemopt opt
+%define name hrwfs
+%define version 3.7
+%define release 0
+%define dist el5
+%define repository gemini
+%define arch i386
+%define debug_package %{nil}
+
+Summary: %{name} Package
+Name: %{name}
 Version: %{version}
-Release: %{release}
+Release: %{release}.%{dist}.%{repository}
 License: GPL
 ## Source:%{name}-%{version}.tar.gz
 Group: Gemini
 BuildRoot: /var/tmp/%{name}-%{version}-root
+Source0: %{name}-%{version}.tar.gz
 BuildArch: %{arch}
 Prefix: %{_prefix}
 ## You may specify dependencies here
@@ -15,28 +26,32 @@ Requires: epics_extension-opiGEM
 # AutoReqProv: no
 
 %description
-Package %{packagename} provides the DM screens for the module hrwfs.
+Package %{name} provides the DM screens for the module hrwfs.
+
+%package ws
+Summary: %{name}-ws Package
+Group: Gemini
+BuildRequires: epics_extension-opiGEM
+Requires: epics_extension-opiGEM
+%description ws
+Package %{name}-ws provides the DM screens for the module %{name}.
 
 ## If you want to have a devel-package to be generated uncomment the following:
 # %package devel
-# Summary: %{packagename}-devel Package
+# Summary: %{name}-devel Package
 # Group: Development/Gemini
-# Requires: %{packagename}
+# Requires: %{name}
 # %description devel
-# This is a default description for the %{packagename}-devel package
+# This is a default description for the %{name}-devel package
 
 ## Of course, you also can create additional packages, e.g for "doc". Just
 ## follow the same way as I did with "%package devel".
 
 %prep
-## Do some preparation stuff, e.g. unpacking the source with
-# tar xvfz zzz.tar.gz 
-
+%setup -n %{name}
 
 %build
-## Write build instructions here, e.g
-# sh configure
-# make
+make
 
 %install
 ## Write install instructions here, e.g
@@ -89,7 +104,7 @@ chmod -R u+w $RPM_BUILD_ROOT/%{_prefix}/share
 ## Usually you won't do much more here than
 rm -rf $RPM_BUILD_ROOT
 
-%files
+%files ws
 %defattr(-,root,root)
 ## list files that are installed here, e.g
 ## %{_prefix}/zzz/zzz
@@ -112,3 +127,6 @@ rm -rf $RPM_BUILD_ROOT
 # - other change made
  * Thu Jan 23 2008 Javier Lührs
  - Initial release
+ * Fri Apr 25 2008 Javier Lührs
+ - Updated rpm build files.
+ - Created subpackage hrwfs-ws for the workstation stuff.
