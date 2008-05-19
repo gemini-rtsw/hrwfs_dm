@@ -3,7 +3,6 @@
 %define name hrwfs
 %define version 3.7
 %define release 0
-%define dist el5
 %define repository gemini
 %define arch i386
 %define debug_package %{nil}
