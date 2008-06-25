@@ -1,10 +1,9 @@
 %define _prefix __auto__
 %define gemopt opt
 %define name hrwfs
-%define version 3.7
-%define release 0
+%define version __auto__
+%define release __auto__
 %define repository gemini
-%define arch i386
 %define debug_package %{nil}
 
 Summary: %{name} Package
