@@ -2,9 +2,8 @@
 %define gemopt opt
 %define name hrwfs
 %define version 3.7
-%define release 1
+%define release 2
 %define repository gemini
-%define arch i386
 %define debug_package %{nil}
 
 Summary: %{name} Package
