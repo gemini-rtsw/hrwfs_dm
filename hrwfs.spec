@@ -13,7 +13,6 @@ Release: %{release}.%{dist}.%{repository}
 License: GPL
 ## Source:%{name}-%{version}.tar.gz
 Group: Gemini
-BuildRoot: /var/tmp/%{name}-%{version}-root
 Source0: %{name}-%{version}.tar.gz
 BuildArch: %{arch}
 Prefix: %{_prefix}
@@ -60,7 +59,7 @@ mkdir -p $RPM_BUILD_ROOT/%{_prefix}/share/dl/hrwfs
 mkdir -p $RPM_BUILD_ROOT/%{_prefix}/bin/
 #mkdir -p $RPM_BUILD_ROOT/%{_prefix}/var/log
 
-cp -r bin/linux-x86/* $RPM_BUILD_ROOT/%{_prefix}/bin/
+cp -r bin/linux-x86*/* $RPM_BUILD_ROOT/%{_prefix}/bin/
 cp -r data/*.dl $RPM_BUILD_ROOT/%{_prefix}/share/dl/hrwfs
 #cp -r data/*.tk $RPM_BUILD_ROOT/%{_prefix}/share/dl/hrwfs
 #cp -r data/*.config $RPM_BUILD_ROOT/%{_prefix}/share/alh/hrwfs
