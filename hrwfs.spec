@@ -1,20 +1,14 @@
-%define _prefix /gemsoft
-%define gemopt opt
-%define name hrwfs
-%define version 3.7
-%define release 2
-%define repository gemini
 %define debug_package %{nil}
 %define _build_id_links none
 
 Summary: %{name} Package
 Name: %{name}
-Version: %{version}
-Release: %{release}.%{dist}.%{repository}
+Version: %{auto_version}
+Release: %{auto_release}.%{dist}.%{repository}
 License: GPL
 Group: Gemini
-BuildRoot: /var/tmp/%{name}-%{version}-root
-Source0: %{name}-%{version}.tar.gz
+BuildRoot: /var/tmp/%{name}-%{auto_version}-root
+Source0: %{name}-%{auto_version}.tar.gz
 BuildArch: %{arch}
 Prefix: %{_prefix}
 Requires: epics_extension-opiGEM%{?_isa}
