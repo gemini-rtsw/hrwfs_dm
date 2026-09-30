@@ -3,9 +3,10 @@
 
 %define name hrwfs
 %define version 3.7
-%define release 3
+%define release 4
 %define repository gemini
 %define _prefix /gemsoft
+%define gemopt opt
 %define epics_arch linux-x86_64
 
 # $GIT_HASH first: build_rpm.sh computes the hash on the HOST and passes it
@@ -61,9 +62,21 @@ make
 rm -rf $RPM_BUILD_ROOT
 mkdir -p $RPM_BUILD_ROOT/%{_prefix}/share/dl/%{name}
 mkdir -p $RPM_BUILD_ROOT/%{_prefix}/bin/
+mkdir -p $RPM_BUILD_ROOT/etc/profile.d/
 
 cp -r bin/%{epics_arch}/* $RPM_BUILD_ROOT/%{_prefix}/bin/
 cp -r data/*.dl $RPM_BUILD_ROOT/%{_prefix}/share/dl/%{name}
+
+# hrwfs_dm.sh runs "dm2-4" by name, which lives in the opiGEM extensions bin.
+# A workstation already has both directories on PATH; a bare container does
+# not. /gemsoft/bin is appended, so it cannot shadow anything a site profile
+# put ahead of it.
+cat > $RPM_BUILD_ROOT/etc/profile.d/%{name}-epics.sh << 'EOF'
+#!/bin/bash
+export PATH="%{_prefix}/%{gemopt}/epics/extensions/bin/%{epics_arch}:$PATH"
+export PATH="$PATH:%{_prefix}/bin"
+EOF
+chmod 755 $RPM_BUILD_ROOT/etc/profile.d/%{name}-epics.sh
 
 chmod -R u+w $RPM_BUILD_ROOT/%{_prefix}/bin
 chmod -R u+w $RPM_BUILD_ROOT/%{_prefix}/share
@@ -75,6 +88,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(-,root,root)
 /%{_prefix}/bin/*
 /%{_prefix}/share/dl/*
+/etc/profile.d/%{name}-epics.sh
 
 %changelog
  * Thu Jan 23 2008 Javier Lührs
