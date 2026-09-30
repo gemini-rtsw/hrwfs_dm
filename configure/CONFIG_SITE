@@ -24,3 +24,11 @@
 # define INSTALL_LOCATION here
 #INSTALL_LOCATION=<fullpathname>
 
+
+# adl2dl (.adl -> .dl) comes from epics_extension-opiGEM. EPICS base only
+# defaults ADL2DL to the bare name "adl2dl", which is not on PATH in the dev
+# container or the RPM build, and the screen rules ignore its exit status --
+# so without this, make "succeeds" and the install step then fails on missing
+# .dl files. An absolute path lets a plain `make` work anywhere opiGEM is
+# installed, with no environment setup.
+ADL2DL = /gemsoft/opt/epics/extensions/bin/linux-x86_64/adl2dl

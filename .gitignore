@@ -1,0 +1,8 @@
+# EPICS build products. `make` installs into $(TOP), so the whole install
+# tree is generated and none of it belongs in git.
+O.*/
+/bin/
+/data/
+
+# gemini-rtsw-ci build output
+/rpms/

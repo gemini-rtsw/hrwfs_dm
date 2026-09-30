@@ -1,0 +1,32 @@
+name: Build
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        # EL9 only. The screens build against the legacy Gemini EPICS 3.14.12
+        # tree under /gemsoft (epics-base-devel, epics_extension-opiGEM), and
+        # those RPMs exist in the rpm-repo for el9 alone -- an el8 leg would
+        # fail on the pins in hrwfs.spec, not on anything in this repo.
+        el: ['9']
+    uses: gemini-rtsw/gemini-rtsw-ci/.github/workflows/ci.yml@main
+    with:
+      scripts_dir: gemini-rtsw-ci
+      el_version: ${{ matrix.el }}
+    secrets: inherit
+
+  publish:
+    needs: build
+    uses: gemini-rtsw/gemini-rtsw-ci/.github/workflows/publish.yml@main
+    secrets: inherit
