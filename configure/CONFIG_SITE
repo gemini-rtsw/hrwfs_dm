@@ -31,4 +31,9 @@
 # so without this, make "succeeds" and the install step then fails on missing
 # .dl files. An absolute path lets a plain `make` work anywhere opiGEM is
 # installed, with no environment setup.
-ADL2DL = /gemsoft/opt/epics/extensions/bin/linux-x86_64/adl2dl
+#
+# The 32-bit converter, deliberately. A .dl is word-size specific -- the
+# 64-bit adl2dl writes a different file -- and the workstations run the 32-bit
+# dm2-4 (opiGEM i686), which segfaults reading 64-bit screens. The i686
+# package ships it as adl2dl2-4, with no bare adl2dl link.
+ADL2DL = /gemsoft/opt/epics/extensions/bin/linux-x86/adl2dl2-4

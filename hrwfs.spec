@@ -3,11 +3,14 @@
 
 %define name hrwfs
 %define version 3.7
-%define release 4
+%define release 5
 %define repository gemini
 %define _prefix /gemsoft
 %define gemopt opt
+# make runs as a 64-bit host build, so its scripts land in bin/linux-x86_64;
+# the screens and the dm2-4 that shows them are 32-bit (linux-x86).
 %define epics_arch linux-x86_64
+%define dm_arch linux-x86
 
 # $GIT_HASH first: build_rpm.sh computes the hash on the HOST and passes it
 # into the build container. A bare `git rev-parse` resolves to "nogit"
@@ -32,14 +35,23 @@ Prefix: %{_prefix}
 # /gem_base: a different tree entirely from the 3.14.12 one configure/RELEASE
 # points at.
 #
-# opiGEM supplies adl2dl (.adl -> .dl, see configure/CONFIG_SITE) and dm2-4.
+# The screens are 32-bit, as on the workstations, which run the i686 opiGEM:
+# a .dl is word-size specific and dm2-4 segfaults reading the other kind. So
+# the converter (see configure/CONFIG_SITE) and the runtime both come from the
+# i686 opiGEM -- the same 1.0-8 the workstations have, and the pairing pr_dm
+# ships with. It requires the i686 epics-base, which is why base is pinned to
+# 3.14.12-8 rather than -10: the x86_64 base that runs make must be the same
+# build as that i686 one, or the two collide in /gemsoft/opt/epics/base. Do
+# not add the x86_64 opiGEM(-devel): it brings a 64-bit dm2-4 into the dev
+# image (pr_dm ac1b9c1).
+#
 # perl IS the EPICS 3.14.12 build system -- convertRelease.pl and
 # installEpics.pl drive every install step -- and the Rocky base image ships
 # the interpreter without the core modules they use (FindBin, File::Copy).
-BuildRequires: epics-base-devel = 3.14.12-10%{?dist}.gemini
-BuildRequires: epics_extension-opiGEM-devel = 1.0-11%{?dist}.gemini
+BuildRequires: epics-base-devel = 3.14.12-8%{?dist}.gemini
+BuildRequires: epics_extension-opiGEM(x86-32) = 1.0-8%{?dist}.gemini
 BuildRequires: perl
-Requires: epics_extension-opiGEM
+Requires: epics_extension-opiGEM(x86-32)
 
 %description
 Package %{name} provides the DM screens for the module hrwfs.
@@ -48,7 +60,7 @@ Package %{name} provides the DM screens for the module hrwfs.
 Summary: %{name}-ws Package
 Group: Gemini
 # hrwfs_dm.sh is a csh script.
-Requires: epics_extension-opiGEM tcsh
+Requires: epics_extension-opiGEM(x86-32) tcsh
 %description ws
 Package %{name}-ws provides the DM screens for the module %{name}.
 
@@ -73,7 +85,7 @@ cp -r data/*.dl $RPM_BUILD_ROOT/%{_prefix}/share/dl/%{name}
 # put ahead of it.
 cat > $RPM_BUILD_ROOT/etc/profile.d/%{name}-epics.sh << 'EOF'
 #!/bin/bash
-export PATH="%{_prefix}/%{gemopt}/epics/extensions/bin/%{epics_arch}:$PATH"
+export PATH="%{_prefix}/%{gemopt}/epics/extensions/bin/%{dm_arch}:$PATH"
 export PATH="$PATH:%{_prefix}/bin"
 EOF
 chmod 755 $RPM_BUILD_ROOT/etc/profile.d/%{name}-epics.sh
