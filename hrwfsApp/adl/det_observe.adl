@@ -19,7 +19,7 @@ display {
 		x="0"
 		y="0"
 		width="996"
-		height="487"
+		height="521"
 	}
 	clr="1"
 	bclr="13"
@@ -89,7 +89,7 @@ display {
 		x="14"
 		y="38"
 		width="970"
-		height="437"
+		height="471"
 		groupid="0"
 	}
 }
@@ -107,7 +107,7 @@ display {
 "text" {
 	object {
 		x="21"
-		y="319"
+		y="353"
 		width="402"
 		height="16"
 		groupid="0"
@@ -173,7 +173,7 @@ display {
 "text" {
 	object {
 		x="21"
-		y="398"
+		y="432"
 		width="429"
 		height="16"
 		groupid="0"
@@ -236,7 +236,7 @@ display {
 "text" {
 	object {
 		x="21"
-		y="424"
+		y="458"
 		width="441"
 		height="16"
 		groupid="0"
@@ -317,7 +317,7 @@ display {
 "text" {
 	object {
 		x="20"
-		y="280"
+		y="314"
 		width="431"
 		height="17"
 		groupid="0"
@@ -328,7 +328,7 @@ display {
 "text" {
 	object {
 		x="21"
-		y="451"
+		y="485"
 		width="425"
 		height="16"
 		groupid="0"
@@ -339,7 +339,7 @@ display {
 "line" {
 	object {
 		x="14"
-		y="308"
+		y="342"
 		width="970"
 		height="0"
 		groupid="0"
@@ -347,11 +347,11 @@ display {
 	npoints="2"
 	point[0] {
 		x="14"
-		y="308"
+		y="342"
 	}
 	point[1] {
 		x="984"
-		y="308"
+		y="342"
 	}
 	orgpoint[0] {
 		x="0"
@@ -365,7 +365,7 @@ display {
 "text" {
 	object {
 		x="21"
-		y="351"
+		y="385"
 		width="431"
 		height="17"
 		groupid="0"
@@ -376,7 +376,7 @@ display {
 "line" {
 	object {
 		x="14"
-		y="379"
+		y="413"
 		width="970"
 		height="0"
 		groupid="0"
@@ -384,11 +384,11 @@ display {
 	npoints="2"
 	point[0] {
 		x="14"
-		y="379"
+		y="413"
 	}
 	point[1] {
 		x="984"
-		y="379"
+		y="413"
 	}
 	orgpoint[0] {
 		x="0"
@@ -402,7 +402,7 @@ display {
 "line" {
 	object {
 		x="14"
-		y="258"
+		y="292"
 		width="970"
 		height="0"
 		groupid="0"
@@ -410,11 +410,11 @@ display {
 	npoints="2"
 	point[0] {
 		x="14"
-		y="258"
+		y="292"
 	}
 	point[1] {
 		x="984"
-		y="258"
+		y="292"
 	}
 	orgpoint[0] {
 		x="0"
@@ -544,7 +544,7 @@ display {
 "text entry" {
 	object {
 		x="530"
-		y="320"
+		y="354"
 		width="450"
 		height="19"
 		groupid="0"
@@ -821,7 +821,7 @@ display {
 "text entry" {
 	object {
 		x="418"
-		y="398"
+		y="432"
 		width="560"
 		height="20"
 		groupid="0"
@@ -962,7 +962,7 @@ display {
 "text entry" {
 	object {
 		x="418"
-		y="424"
+		y="458"
 		width="560"
 		height="20"
 		groupid="0"
@@ -1191,7 +1191,7 @@ display {
 "text entry" {
 	object {
 		x="750"
-		y="279"
+		y="313"
 		width="100"
 		height="20"
 		groupid="0"
@@ -1236,7 +1236,7 @@ display {
 "message button" {
 	object {
 		x="420"
-		y="279"
+		y="313"
 		width="100"
 		height="20"
 		groupid="0"
@@ -1284,7 +1284,7 @@ display {
 "message button" {
 	object {
 		x="530"
-		y="279"
+		y="313"
 		width="100"
 		height="20"
 		groupid="0"
@@ -1332,7 +1332,7 @@ display {
 "message button" {
 	object {
 		x="420"
-		y="320"
+		y="354"
 		width="100"
 		height="19"
 		groupid="0"
@@ -1380,7 +1380,7 @@ display {
 "message button" {
 	object {
 		x="418"
-		y="450"
+		y="484"
 		width="100"
 		height="19"
 		groupid="0"
@@ -1428,7 +1428,7 @@ display {
 "text entry" {
 	object {
 		x="528"
-		y="450"
+		y="484"
 		width="450"
 		height="19"
 		groupid="0"
@@ -1473,7 +1473,7 @@ display {
 "message button" {
 	object {
 		x="640"
-		y="279"
+		y="313"
 		width="100"
 		height="20"
 		groupid="0"
@@ -1521,7 +1521,7 @@ display {
 "text entry" {
 	object {
 		x="750"
-		y="349"
+		y="383"
 		width="100"
 		height="20"
 		groupid="0"
@@ -1566,7 +1566,7 @@ display {
 "message button" {
 	object {
 		x="420"
-		y="350"
+		y="384"
 		width="100"
 		height="20"
 		groupid="0"
@@ -1614,7 +1614,7 @@ display {
 "message button" {
 	object {
 		x="530"
-		y="350"
+		y="384"
 		width="100"
 		height="20"
 		groupid="0"
@@ -1662,7 +1662,7 @@ display {
 "message button" {
 	object {
 		x="640"
-		y="350"
+		y="384"
 		width="100"
 		height="20"
 		groupid="0"
@@ -1810,6 +1810,62 @@ display {
 	}
 	control {
 		chan="$(top)$(cad).B"
+		clr="0"
+		bclr="6"
+		label="none"
+		clrmod="rule"
+		rulechan[0] = "$(top)$(cad).VAL"
+		rulechan[1] = "$(top)$(cad).VAL"
+		rulechan[2] = "$(top)$(cad).VAL"
+		rulechan[3] = ""
+		rulechan[4] = ""
+		rulechan[5] = ""
+		rulechan[6] = ""
+		rulechan[7] = ""
+		rulechan[8] = ""
+		rulechan[9] = ""
+		rulechan[10] = ""
+		rulechan[11] = ""
+		rulechan[12] = ""
+		rulechan[13] = ""
+		rulechan[14] = ""
+		rulechan[15] = ""
+		clrrule="acceptReject"
+		clrargs="C=$(top)$(cad)"
+		rulecolorbg="1"
+		rulecolorfg="1"
+		hdl="0"
+		ldl="0"
+		prec="-1"
+		newunits=""
+		units="none"
+		decorate="none"
+		convertFunc=""
+		convertParams=""
+	}
+	format="decimal"
+}
+"text" {
+	object {
+		x="20"
+		y="262"
+		width="410"
+		height="17"
+		groupid="0"
+	}
+	textix="Pause between images (seconds, 0=off):"
+	align="horiz. left"
+}
+"text entry" {
+	object {
+		x="419"
+		y="260"
+		width="140"
+		height="21"
+		groupid="0"
+	}
+	control {
+		chan="$(top)$(cad).I"
 		clr="0"
 		bclr="6"
 		label="none"
